@@ -15,7 +15,7 @@ Product Manager
 
 ### As Gerald, I need to enter inches into the required measurements on the command line.
 
-The current application assumes `--width 8` and `--length 8` are feet, but Gerald would like to be able to set the units. In discussion, we came up with severald ideas that would accomplish the goal:
+The current application assumes `--width 8` and `--length 8` are feet, but Gerald would like to be able to set the units. In discussion, we came up with several ideas that would accomplish the goal:
 
   1. Allowing `--width 8ft 3in` as an entry
   2. Allowing `--width 8'3"` as an entry
