@@ -148,10 +148,10 @@ export function calculateHouseRequirements(
     const wall2 = buildWall(innerLengthOfHouse);
 
     const studs = accountForWaste((wall1.studs + wall2.studs) * 2);
-    const beams = accountForWaste((wall1.beams + wall2.beams) * 2 + 4);
+    const posts = accountForWaste((wall1.beams + wall2.beams) * 2 + 4);
 
     return {
         studs: studs,
-        beams: beams,
+        beams: posts,
     };
 }
