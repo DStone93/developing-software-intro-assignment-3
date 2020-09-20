@@ -24,6 +24,7 @@ function getStudsInLength(inches: number) {
     // calculate the studs across
     // round up to account for the last one
     const studs = Math.ceil(inches / STUDS_OFFSET);
+    console.log ("getstuds", studs)
 
     // make sure we add an end piece if we have a perfect multiple of 16
     const isNotPerfectWidth = Math.min(inches % STUDS_OFFSET, 1);
@@ -31,11 +32,10 @@ function getStudsInLength(inches: number) {
     return studs + perfectWidthExtension;
 }
 
-function getBoardsInLength(inches: number): number {
-    const plates = getPlatesInLength(inches);
+function getBoardsInLength(inches: number): number {;
     const studs = getStudsInLength(inches);
-
-    return plates + studs;
+    console.log ("getboardsinlength", studs)
+    return studs;
 }
 
 function getRequiredBeamsInLength(inches: number) {
@@ -118,7 +118,6 @@ function buildWall(inches: number) {
     const studs =
         getBoardsInLength(FULL_BOARD_SECTION_SIZE) * fullSections +
         getBoardsInLength(lastSectionSize);
-
     return {
         function: "buildWall",
         inches,
@@ -134,25 +133,54 @@ function accountForWaste(items: number): number {
 
 export function calculateHouseRequirements(
     widthInFeet: number,
-    lengthInFeet: number
-) {
+    lengthInFeet: number,
+    Widthinches: boolean,
+    Lengthinches: boolean
+) 
+{
+    if 
+    (!Lengthinches == true) 
+    (!lengthInFeet == false);
+         
+    else 
+    (!Widthinches == true);
+    (!widthInFeet == false);
+
     // convert feet to inches
     const outerWidthOfHouse = convertFeetToInches(widthInFeet);
     const outerLengthOfHouse = convertFeetToInches(lengthInFeet);
 
+
     // calculate the space inbetween corner beams
+    const Fourcorners = 4
     const innerWidthOfHouse = outerWidthOfHouse - BEAM_WIDTH * 2;
     const innerLengthOfHouse = outerLengthOfHouse - BEAM_WIDTH * 2;
 
     const wall1 = buildWall(innerWidthOfHouse);
     const wall2 = buildWall(innerLengthOfHouse);
 
-    const studs = accountForWaste((wall1.studs + wall2.studs) * 2);
-    const posts = accountForWaste((wall1.beams + wall2.beams) * 2 + 4);
-
+    const studs = ((wall1.studs + wall2.studs) * 2);
+    const posts = ((wall1.beams + wall2.beams) * 2);
+    const TopPlates = getPlatesInLength(outerLengthOfHouse)
+    const BottomPlates = getPlatesInLength(outerWidthOfHouse)
     return {
         studs: studs,
-        beams: posts,
-        test: innerWidthOfHouse
+        beams: Fourcorners,
+        posts: posts,
+        plates: TopPlates + BottomPlates
     };
 }
+
+// export function calculateHouseRequirements(
+//     widthInFeet: number,
+//     lengthInFeet: number,
+//     Widthinches: boolean,
+//     Lengthinches: boolean
+// ) 
+// {
+//     if (!Lengthinches == true) {
+//         (!lengthInFeet == false);
+        
+//     } 
+//     else (!Widthinches == true);
+//     (!widthInFeet == false);
