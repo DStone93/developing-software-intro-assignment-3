@@ -1,11 +1,10 @@
 import { Arguments, Argv } from "yargs";
 import { calculateHouseRequirements } from "../wallCalculator";
+import yargs = require("yargs");
 
 export function calcWoodNeeded(yargs: Argv): void {
-    
     // create a new yargs "command"
     yargs.command(
-        
         // name the command with no spaces
         "calc-wood-needed",
 
@@ -25,6 +24,17 @@ export function calcWoodNeeded(yargs: Argv): void {
                 alias: "l",
                 description: "The length of the house",
             },
+
+            LengthInches: {
+                type: "boolean",
+                alias: "linches",
+                description: "The inches portion of the Walls length",
+            },
+            WidthInches: {
+                type: "boolean",
+                alias: "winches",
+                description: "The inches portion of the Walls width",
+            },
         },
 
         // define the function we want to run once the arguments are parsed
@@ -34,16 +44,20 @@ export function calcWoodNeeded(yargs: Argv): void {
                 length: number;
                 w: number;
                 l: number;
+                WidthInches: boolean;
+                LengthInches: boolean;
+                winches: boolean;
+                linches: boolean;
             }>
         ) {
-            
             const requirements = calculateHouseRequirements(
                 args.width,
-                args.length
+                args.length,
+                args.LengthInches,
+                args.WidthInches
             );
 
-            console.log( requirements );
-
+            console.log(requirements);
         }
     );
 }

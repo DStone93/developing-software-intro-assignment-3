@@ -153,5 +153,6 @@ export function calculateHouseRequirements(
     return {
         studs: studs,
         beams: posts,
+        test: innerWidthOfHouse
     };
 }
