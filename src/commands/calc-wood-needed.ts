@@ -12,6 +12,11 @@ export function calcWoodNeeded(yargs: Argv): void {
 
         // define the parameters we need for our command
         {
+            ClientsName:{
+                type: "string",
+                alias: "name",
+                description: "Create a new save for the clients name"
+            },
             width: {
                 type: "number",
                 alias: "w",
@@ -39,6 +44,8 @@ export function calcWoodNeeded(yargs: Argv): void {
         // define the function we want to run once the arguments are parsed
         function (
             args: Arguments<{
+                ClientsName: string;
+                name: string;
                 width: number;
                 length: number;
                 Widthinches: boolean;
@@ -47,14 +54,16 @@ export function calcWoodNeeded(yargs: Argv): void {
                 l: number;   
                 wunits: boolean;
                 lunits: boolean;
+                
             }>
         ) {
             const requirements = calculateHouseRequirements(
+                args.ClientsName,
                 args.width,
                 args.length,  
                 args.lengthinches,
-                args.Widthinches
-
+                args.Widthinches,
+                
             );
 
             console.log(requirements);
