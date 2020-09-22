@@ -1,3 +1,5 @@
+import { Houses } from '../house/houses'
+
 const BEAM_WIDTH = 3.5;
 const BOARD_LENGTH = 8 * 12;
 const WASTE_MULTIPLIER = 0.1;
@@ -17,7 +19,7 @@ function convertFeetToInches(feet: number) {
 function getPlatesInLength(inches: number) {
     // devide the length by 96 inches (8 feet) and round up
     // multiply by two because we're doing the top and bottom in one calculation
-    return Math.ceil(inches / BOARD_LENGTH) * 2;
+    return Math.ceil(inches / BOARD_LENGTH) * 3;
 }
 
 function getStudsInLength(inches: number) {
@@ -32,10 +34,9 @@ function getStudsInLength(inches: number) {
 }
 
 function getBoardsInLength(inches: number): number {
-    const plates = getPlatesInLength(inches);
     const studs = getStudsInLength(inches);
 
-    return plates + studs;
+    return studs;
 }
 
 function getRequiredBeamsInLength(inches: number) {
@@ -114,7 +115,9 @@ function buildWall(inches: number) {
     // get required beams
     const requiredBeams = getRequiredBeamsInLength(inches);
     const fullSections = getFullSections(inches, requiredBeams);
+    console.log (fullSections)
     const lastSectionSize = getLastSectionSize(inches, requiredBeams);
+    console.log(lastSectionSize)
     const studs =
         getBoardsInLength(FULL_BOARD_SECTION_SIZE) * fullSections +
         getBoardsInLength(lastSectionSize);
@@ -131,28 +134,57 @@ function accountForWaste(items: number): number {
     const waste = Math.ceil(items * WASTE_MULTIPLIER);
     return waste + items;
 }
-
+    
 export function calculateHouseRequirements(
     widthInFeet: number,
-    lengthInFeet: number
+    lengthInFeet: number,
+    Lengthinches: boolean,
+    Widthinches: boolean,
 ) {
-    // convert feet to inches
-    const outerWidthOfHouse = convertFeetToInches(widthInFeet);
-    const outerLengthOfHouse = convertFeetToInches(lengthInFeet);
+    
+// Walls in inches basically is useless?
+    let outerWidthOfHouse
+    switch(outerWidthOfHouse) {
+        case (Widthinches == true):
+            return outerWidthOfHouse = Widthinches
+            
+        case Widthinches:
+            outerWidthOfHouse = convertFeetToInches (widthInFeet)
+            break;   
+    };
+    
+    let outerLengthOfHouse
+    switch (outerLengthOfHouse){
+        case (Lengthinches == true):
+        return outerLengthOfHouse = Widthinches;
+        
+        case (Lengthinches):
+        outerLengthOfHouse = convertFeetToInches(lengthInFeet);
+        break;
+    }
+
+    // const outerWidthOfHouse = convertFeetToInches(widthInFeet);
+    // const outerLengthOfHouse = convertFeetToInches(lengthInFeet);
 
     // calculate the space inbetween corner beams
+    const Fourcorners = 4;
     const innerWidthOfHouse = outerWidthOfHouse - BEAM_WIDTH * 2;
     const innerLengthOfHouse = outerLengthOfHouse - BEAM_WIDTH * 2;
+    // const Incheswidth = Widthinches - BEAM_WIDTH * 2;
+    // const Incheslength = Lengthinches - BEAM_WIDTH * 2;
 
     const wall1 = buildWall(innerWidthOfHouse);
     const wall2 = buildWall(innerLengthOfHouse);
 
-    const studs = accountForWaste((wall1.studs + wall2.studs) * 2);
-    const posts = accountForWaste((wall1.beams + wall2.beams) * 2 + 4);
-
+    const studs = (wall1.studs + wall2.studs) * 2;
+    const posts = (wall1.beams + wall2.beams) * 2;
+    const W1Plates = getPlatesInLength(outerLengthOfHouse * 2);
+    const W2Plates = getPlatesInLength(outerWidthOfHouse * 2);
+    const totalplates = (W1Plates + W2Plates)
     return {
         studs: studs,
-        beams: posts,
-        test: innerWidthOfHouse
-    };
+        posts: posts,
+        plates: totalplates
+    }; 
 }
+

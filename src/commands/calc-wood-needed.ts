@@ -1,6 +1,5 @@
 import { Arguments, Argv } from "yargs";
 import { calculateHouseRequirements } from "../wallCalculator";
-import yargs = require("yargs");
 
 export function calcWoodNeeded(yargs: Argv): void {
     // create a new yargs "command"
@@ -19,42 +18,43 @@ export function calcWoodNeeded(yargs: Argv): void {
                 description: "The width of the house",
             },
 
+            Widthinches:{
+                type: "boolean",
+                alias: "wunits",
+                description: "The width inches portion"
+            },
+
             length: {
                 type: "number",
                 alias: "l",
                 description: "The length of the house",
             },
 
-            LengthInches: {
+            lengthinches:{
                 type: "boolean",
-                alias: "linches",
-                description: "The inches portion of the Walls length",
+                alias: "lunits",
+                description: "The length inches portion"
             },
-            WidthInches: {
-                type: "boolean",
-                alias: "winches",
-                description: "The inches portion of the Walls width",
-            },
-        },
-
+        },    
         // define the function we want to run once the arguments are parsed
         function (
             args: Arguments<{
                 width: number;
                 length: number;
+                Widthinches: boolean;
+                lengthinches: boolean;
                 w: number;
-                l: number;
-                WidthInches: boolean;
-                LengthInches: boolean;
-                winches: boolean;
-                linches: boolean;
+                l: number;   
+                wunits: boolean;
+                lunits: boolean;
             }>
         ) {
             const requirements = calculateHouseRequirements(
                 args.width,
-                args.length,
-                args.LengthInches,
-                args.WidthInches
+                args.length,  
+                args.lengthinches,
+                args.Widthinches
+
             );
 
             console.log(requirements);
