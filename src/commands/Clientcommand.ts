@@ -1,6 +1,6 @@
 import { Arguments, Argv } from "yargs";
 import { calculateHouseRequirements } from "../wallCalculator";
-import { recallClients } from "../wallCalculator/PreviousClient";
+import { recallClients } from "../commands/PreviousClient";
 
 export function client(yargs: Argv): void {
     // create a new yargs "command"

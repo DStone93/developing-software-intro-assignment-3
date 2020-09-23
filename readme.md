@@ -9,22 +9,28 @@ This respository is intended for the use of Focus College Students enrolled in t
 ## How to use this Application:
 *  ### You first need to run:
 ```
-Npm install
+npm install
 ```
-
+---
+## Using the commands
 
 *  You may pass in arguments as normal without adding a name; such as:
 It will return with "No name specified" but will not save it.
 ```
-npm run start -- calc-wood-needed -w 8 -l 8
+npm start -- calc-wood-needed -w 8 -l 8
 ```
+*  If you would like to input your requirements as inches, use --inches at the end of your arguments:
+```
+npm start -- calc-wood-needed -w 96 -l 96 --inches
+```
+
 *  If you would like to create a house that you can recall you will use:
 ```
-npm run start -- calc-wood-needed -client "name" -w 8 -l 8
+npm start -- calc-wood-needed --client example -w 8 -l 8
 ```
 * To recall the save house simply insert:
 ```
-npm run start client "their name"
+npm start -- client "their name"
 ```
 ---
 ## Gerald has supplied us with his new requirements:

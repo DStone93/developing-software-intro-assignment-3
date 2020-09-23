@@ -1,8 +1,6 @@
-
 import { House } from "../house";
-import { buildWall } from ".";
+import { buildWall } from "../wallCalculator";
 import { Houses } from "../house/houses";
-
 
 Houses.setWallSuppliesCalculator((inches) => buildWall(inches));
 

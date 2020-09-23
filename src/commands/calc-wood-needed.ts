@@ -12,21 +12,15 @@ export function calcWoodNeeded(yargs: Argv): void {
 
         // define the parameters we need for our command
         {
-            ClientsName:{
+            clientsName: {
                 type: "string",
                 alias: "name",
-                description: "Create a new save for the clients name"
+                description: "Create a new save for the clients name",
             },
             width: {
                 type: "number",
                 alias: "w",
                 description: "The width of the house",
-            },
-
-            Widthinches:{
-                type: "boolean",
-                alias: "wunits",
-                description: "The width inches portion"
             },
 
             length: {
@@ -35,35 +29,32 @@ export function calcWoodNeeded(yargs: Argv): void {
                 description: "The length of the house",
             },
 
-            lengthinches:{
-                type: "boolean",
-                alias: "lunits",
-                description: "The length inches portion"
+            inchesflag: {
+                type: "boolean",
+                alias: "inches",
+                description: "The flag to toggle input as inches",
             },
-        },    
+                
+        },
         // define the function we want to run once the arguments are parsed
         function (
             args: Arguments<{
-                ClientsName: string;
-                name: string;
+                clientsName: string;
                 width: number;
                 length: number;
-                Widthinches: boolean;
-                lengthinches: boolean;
+                inchesflag: boolean;
+                name: string;
                 w: number;
-                l: number;   
-                wunits: boolean;
-                lunits: boolean;
-                
+                l: number;
+                inches: boolean;
             }>
         ) {
+            // WHY IS IT RETURNING NAN
             const requirements = calculateHouseRequirements(
-                args.ClientsName,
+                args.clientsName,
                 args.width,
-                args.length,  
-                args.lengthinches,
-                args.Widthinches,
-                
+                args.length,
+                args.inchesflag,
             );
 
             console.log(requirements);

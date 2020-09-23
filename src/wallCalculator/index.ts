@@ -19,7 +19,7 @@ function convertFeetToInches(feet: number) {
 function getPlatesInLength(inches: number) {
     // devide the length by 96 inches (8 feet) and round up
     // multiply by two because we're doing the top and bottom in one calculation
-    return Math.ceil(inches / BOARD_LENGTH) * 2;
+    return Math.ceil(inches / BOARD_LENGTH) * 3;
 }
 
 function getStudsInLength(inches: number) {
@@ -117,8 +117,8 @@ export function buildWall(inches: number) {
     return {
         function: "buildWall",
         inches,
-        studs: studs,
         posts: posts,
+        studs: studs,
         plates: plates,
     };
 }
@@ -132,35 +132,34 @@ export function calculateHouseRequirements(
     Clientsname: string,
     widthInFeet: number,
     lengthInFeet: number,
-    Lengthinches: boolean,
-    Widthinches: boolean,
+    inchesflag: boolean
 ) {
 
-    let outerWidthOfHouse
-    switch(outerWidthOfHouse) {
-        case (Widthinches == true):
-            return outerWidthOfHouse = Widthinches
-            
-        case Widthinches:
-            outerWidthOfHouse = convertFeetToInches (widthInFeet)
-            break;   
-    };
-    
-    let outerLengthOfHouse
-    switch (outerLengthOfHouse){
-        case (Lengthinches == true):
-        return outerLengthOfHouse = Widthinches;
-        
-        case (Lengthinches):
-        outerLengthOfHouse = convertFeetToInches(lengthInFeet);
-        break;
-    }
-    // const house = Houses.create(Clientsname);
-    // Houses.save(house);
+    // if (inchesflag == true)
+    // return "success!"
 
-    // if (!Clientsname) {
-    //     house.name= "No Name Specificed"; 
-    // }
+    // else (inchesflag)
+    // return "Fail!"
+
+    let outerWidthOfHouse;
+    if (inchesflag == true) {
+      outerWidthOfHouse = widthInFeet;
+    } else {
+        outerWidthOfHouse = convertFeetToInches(widthInFeet);
+    }
+
+    let outerLengthOfHouse;
+    if (inchesflag == true) {
+       outerLengthOfHouse = lengthInFeet
+    } else {
+        outerLengthOfHouse = convertFeetToInches(lengthInFeet);
+    }
+
+    // const house = Houses.create(Clientsname);
+    // widthInFeet;
+    // lengthInFeet;
+    // Houses.save(house);
+    
 
     // const outerWidthOfHouse = convertFeetToInches(widthInFeet);
     // const outerLengthOfHouse = convertFeetToInches(lengthInFeet);
@@ -178,7 +177,7 @@ export function calculateHouseRequirements(
     const Plates = accountForWaste(getPlatesInLength(outerLengthOfHouse * 2));
     const studs = accountForWaste(wall1.studs + wall2.studs) * 2;
     const posts = accountForWaste(wall1.posts + wall2.posts) * 2;
-    
+
     return {
         posts: posts,
         studs: studs,
