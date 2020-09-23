@@ -1,7 +1,7 @@
-import { Houses } from '../house/houses'
+import { Houses } from "../house/houses";
 
 const BEAM_WIDTH = 3.5;
-const BOARD_LENGTH = 8 * 12;
+const BOARD_LENGTH = 96;
 const WASTE_MULTIPLIER = 0.1;
 const STUDS_OFFSET = 16;
 
@@ -19,24 +19,18 @@ function convertFeetToInches(feet: number) {
 function getPlatesInLength(inches: number) {
     // devide the length by 96 inches (8 feet) and round up
     // multiply by two because we're doing the top and bottom in one calculation
-    return Math.ceil(inches / BOARD_LENGTH) * 3;
+    return Math.ceil(inches / BOARD_LENGTH) * 2;
 }
 
 function getStudsInLength(inches: number) {
     // calculate the studs across
     // round up to account for the last one
     const studs = Math.ceil(inches / STUDS_OFFSET);
-    console.log ("getstuds", studs)
 
     // make sure we add an end piece if we have a perfect multiple of 16
     const isNotPerfectWidth = Math.min(inches % STUDS_OFFSET, 1);
     const perfectWidthExtension = isNotPerfectWidth * -1 + 1;
     return studs + perfectWidthExtension;
-}
-
-function getBoardsInLength(inches: number): number {
-    const studs = getStudsInLength(inches);
-    return studs;
 }
 
 function getRequiredBeamsInLength(inches: number) {
@@ -113,19 +107,19 @@ function getLastSectionSize(inches: number, beams: number) {
 
 export function buildWall(inches: number) {
     // get required beams
-    const requiredBeams = getRequiredBeamsInLength(inches);
-    const fullSections = getFullSections(inches, requiredBeams);
-    console.log (fullSections)
-    const lastSectionSize = getLastSectionSize(inches, requiredBeams);
-    console.log(lastSectionSize)
+    const posts = getRequiredBeamsInLength(inches);
+    const fullSections = getFullSections(inches, posts);
+    const lastSectionSize = getLastSectionSize(inches, posts);
+    const plates = getPlatesInLength(inches);
     const studs =
-        getBoardsInLength(FULL_BOARD_SECTION_SIZE) * fullSections +
-        getBoardsInLength(lastSectionSize);
+        getStudsInLength(FULL_BOARD_SECTION_SIZE) * fullSections +
+        getStudsInLength(lastSectionSize);
     return {
         function: "buildWall",
         inches,
         studs: studs,
-        beams: requiredBeams,
+        posts: posts,
+        plates: plates,
     };
 }
 
@@ -133,17 +127,14 @@ function accountForWaste(items: number): number {
     const waste = Math.ceil(items * WASTE_MULTIPLIER);
     return waste + items;
 }
-    
+
 export function calculateHouseRequirements(
     Clientsname: string,
     widthInFeet: number,
     lengthInFeet: number,
     Lengthinches: boolean,
     Widthinches: boolean,
-    
 ) {
-    const house = Houses.create(Clientsname);
-   Houses.save(house);
 
     let outerWidthOfHouse
     switch(outerWidthOfHouse) {
@@ -164,10 +155,15 @@ export function calculateHouseRequirements(
         outerLengthOfHouse = convertFeetToInches(lengthInFeet);
         break;
     }
+    // const house = Houses.create(Clientsname);
+    // Houses.save(house);
+
+    // if (!Clientsname) {
+    //     house.name= "No Name Specificed"; 
+    // }
 
     // const outerWidthOfHouse = convertFeetToInches(widthInFeet);
     // const outerLengthOfHouse = convertFeetToInches(lengthInFeet);
-
 
     // calculate the space inbetween corner beams
     const Fourcorners = 4;
@@ -179,17 +175,13 @@ export function calculateHouseRequirements(
     const wall1 = buildWall(innerWidthOfHouse);
     const wall2 = buildWall(innerLengthOfHouse);
 
-    const studs = (wall1.studs + wall2.studs) * 2;
-    const posts = (wall1.beams + wall2.beams) * 2;
-    const W1Plates = getPlatesInLength(outerLengthOfHouse * 2);
-    const W2Plates = getPlatesInLength(outerWidthOfHouse * 2);
-    const totalplates = (W1Plates + W2Plates)
+    const Plates = accountForWaste(getPlatesInLength(outerLengthOfHouse * 2));
+    const studs = accountForWaste(wall1.studs + wall2.studs) * 2;
+    const posts = accountForWaste(wall1.posts + wall2.posts) * 2;
+    
     return {
-        beams: Fourcorners,
         posts: posts,
         studs: studs,
-        plates: totalplates,
-        
-    }; 
+        plates: Plates,
+    };
 }
-
