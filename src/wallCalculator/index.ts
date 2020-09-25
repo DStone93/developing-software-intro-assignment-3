@@ -129,40 +129,32 @@ function accountForWaste(items: number): number {
 }
 
 export function calculateHouseRequirements(
-    Clientsname: string,
-    widthInFeet: number,
+
+    clientsname: string,
+     widthInFeet: number,
     lengthInFeet: number,
     inchesflag: boolean
 ) {
 
-    // if (inchesflag == true)
-    // return "success!"
+    Houses.setWallSuppliesCalculator((inches) => buildWall(inches));
+    const house = Houses.create(clientsname);
 
-    // else (inchesflag)
-    // return "Fail!"
-
+    // If the inches flag is true, the arguments will not be multiplied by 12
+    // If false: convert feet to inches
     let outerWidthOfHouse;
     if (inchesflag == true) {
-      outerWidthOfHouse = widthInFeet;
+        outerWidthOfHouse = widthInFeet;
     } else {
         outerWidthOfHouse = convertFeetToInches(widthInFeet);
     }
 
     let outerLengthOfHouse;
     if (inchesflag == true) {
-       outerLengthOfHouse = lengthInFeet
+        outerLengthOfHouse = lengthInFeet;
     } else {
         outerLengthOfHouse = convertFeetToInches(lengthInFeet);
     }
 
-    // const house = Houses.create(Clientsname);
-    // widthInFeet;
-    // lengthInFeet;
-    // Houses.save(house);
-    
-
-    // const outerWidthOfHouse = convertFeetToInches(widthInFeet);
-    // const outerLengthOfHouse = convertFeetToInches(lengthInFeet);
 
     // calculate the space inbetween corner beams
     const Fourcorners = 4;
@@ -174,13 +166,17 @@ export function calculateHouseRequirements(
     const wall1 = buildWall(innerWidthOfHouse);
     const wall2 = buildWall(innerLengthOfHouse);
 
-    const Plates = accountForWaste(getPlatesInLength(outerLengthOfHouse * 2));
+    const plates = accountForWaste(getPlatesInLength(outerLengthOfHouse * 2));
     const studs = accountForWaste(wall1.studs + wall2.studs) * 2;
     const posts = accountForWaste(wall1.posts + wall2.posts) * 2;
+
+    house.length = outerLengthOfHouse;
+    house.width = outerWidthOfHouse;
+    Houses.save(house);
 
     return {
         posts: posts,
         studs: studs,
-        plates: Plates,
-    };
+        plates: plates,
+   };
 }

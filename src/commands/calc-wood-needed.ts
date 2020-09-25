@@ -17,6 +17,7 @@ export function calcWoodNeeded(yargs: Argv): void {
                 alias: "name",
                 description: "Create a new save for the clients name",
             },
+
             width: {
                 type: "number",
                 alias: "w",
@@ -29,10 +30,10 @@ export function calcWoodNeeded(yargs: Argv): void {
                 description: "The length of the house",
             },
 
-            inchesflag: {
-                type: "boolean",
-                alias: "inches",
-                description: "The flag to toggle input as inches",
+            inchesflag: {
+                type: "boolean",
+                alias: "inches",
+                description: "The flag to toggle input as inches",
             },
                 
         },
@@ -54,7 +55,8 @@ export function calcWoodNeeded(yargs: Argv): void {
                 args.clientsName,
                 args.width,
                 args.length,
-                args.inchesflag,
+                args.inchesflag
+
             );
 
             console.log(requirements);
