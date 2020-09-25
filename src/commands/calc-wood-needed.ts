@@ -35,6 +35,7 @@ export function calcWoodNeeded(yargs: Argv): void {
                 alias: "inches",
                 description: "The flag to toggle input as inches",
             },
+                
         },
         // define the function we want to run once the arguments are parsed
         function (
@@ -55,6 +56,7 @@ export function calcWoodNeeded(yargs: Argv): void {
                 args.width,
                 args.length,
                 args.inchesflag
+
             );
 
             console.log(requirements);

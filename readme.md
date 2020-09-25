@@ -9,6 +9,7 @@ This respository is intended for the use of Focus College Students enrolled in t
 ## How to use this Application:
 *  ### You first need to run:
 ```
+
 $ npm install
 $ tsc
 ```
@@ -16,6 +17,7 @@ $ tsc
 ## Using the commands:
 
 *  You may pass in arguments as normal without adding a name; such as:
+
 ```
 npm start -- calc-wood-needed -w 8 -l 8
 ```
@@ -23,6 +25,7 @@ npm start -- calc-wood-needed -w 8 -l 8
 ```
 npm start -- calc-wood-needed -w 96 -l 96 --inches
 ```
+
 * A first time client parameters will be saved to dist the folder by using the argument:
 ```
 npm start -- calc-wood-needed --name example -w 8 -l 8
@@ -79,6 +82,8 @@ function: 'buildWall',
     plates: 9
   }
 }
+
+
 ```
 ---
 ## Gerald has supplied us with his new requirements:
@@ -88,6 +93,7 @@ The current application assumes --width 8 and --length 8 are feet, but Gerald wo
 
 *  Allowing --width 8ft 3in as an entry
 *  Allowing --width 8'3" as an entry
+
 *  Adding a flag to determine the units (i.e. --width 99 --units inches)
 Only one method is required, but decimal values are NOT acceptable. (Gerald doesn't want 8.3 to be confused with 8'3").
 
@@ -98,6 +104,7 @@ Only one method is required, but decimal values are NOT acceptable. (Gerald does
 **As Gerald, I need the application to seperate between studs and plates.**
 
 *  Currently, we return the total number of studs required for the building. Gerald need to know the different between the top/bottom boards (called "plates") and the vertical boards (called "studs"). We also need to calculate two rows of top plates. The bottom plates will still only have one row.
+
 
 **As Gerald, I need the application to seperate between studs and plates.**
 

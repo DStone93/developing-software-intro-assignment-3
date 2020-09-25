@@ -117,8 +117,8 @@ export function buildWall(inches: number) {
     return {
         function: "buildWall",
         inches,
-        studs: studs,
         posts: posts,
+        studs: studs,
         plates: plates,
     };
 }
@@ -129,11 +129,13 @@ function accountForWaste(items: number): number {
 }
 
 export function calculateHouseRequirements(
+
     clientsname: string,
-    widthInFeet: number,
+     widthInFeet: number,
     lengthInFeet: number,
     inchesflag: boolean
 ) {
+
     Houses.setWallSuppliesCalculator((inches) => buildWall(inches));
     const house = Houses.create(clientsname);
 
@@ -152,6 +154,7 @@ export function calculateHouseRequirements(
     } else {
         outerLengthOfHouse = convertFeetToInches(lengthInFeet);
     }
+
 
     // calculate the space inbetween corner beams
     const Fourcorners = 4;
@@ -175,5 +178,5 @@ export function calculateHouseRequirements(
         posts: posts,
         studs: studs,
         plates: plates,
-    };
+   };
 }
