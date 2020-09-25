@@ -1,6 +1,5 @@
 import { Arguments, Argv } from "yargs";
 import { calculateHouseRequirements } from "../wallCalculator";
-import yargs = require("yargs");
 
 export function calcWoodNeeded(yargs: Argv): void {
     // create a new yargs "command"
@@ -13,6 +12,12 @@ export function calcWoodNeeded(yargs: Argv): void {
 
         // define the parameters we need for our command
         {
+            clientsName: {
+                type: "string",
+                alias: "name",
+                description: "Create a new save for the clients name",
+            },
+
             width: {
                 type: "number",
                 alias: "w",
@@ -25,36 +30,31 @@ export function calcWoodNeeded(yargs: Argv): void {
                 description: "The length of the house",
             },
 
-            LengthInches: {
+            inchesflag: {
                 type: "boolean",
-                alias: "linches",
-                description: "The inches portion of the Walls length",
-            },
-            WidthInches: {
-                type: "boolean",
-                alias: "winches",
-                description: "The inches portion of the Walls width",
+                alias: "inches",
+                description: "The flag to toggle input as inches",
             },
         },
-
         // define the function we want to run once the arguments are parsed
         function (
             args: Arguments<{
+                clientsName: string;
                 width: number;
                 length: number;
+                inchesflag: boolean;
+                name: string;
                 w: number;
                 l: number;
-                WidthInches: boolean;
-                LengthInches: boolean;
-                winches: boolean;
-                linches: boolean;
+                inches: boolean;
             }>
         ) {
+            // WHY IS IT RETURNING NAN
             const requirements = calculateHouseRequirements(
+                args.clientsName,
                 args.width,
                 args.length,
-                args.LengthInches,
-                args.WidthInches
+                args.inchesflag
             );
 
             console.log(requirements);
